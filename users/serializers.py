@@ -1,35 +1,32 @@
 from rest_framework import serializers
-from .models import User  
+from django.contrib.auth import get_user_model
+from django.core.validators import validate_email
 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-    
+User = get_user_model()
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=8)
+    password2 = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = [
-            'username', 
-            'email', 
-            'password',
-            'favorite_artists',
-            'disliked_artists',
-            'liked_tracks',
-            'disliked_tracks'
-        ]
-        extra_kwargs = {
-            'favorite_artists': {'required': False},
-            'disliked_artists': {'required': False},
-            'liked_tracks': {'required': False},
-            'disliked_tracks': {'required': False}
-        }
-    
+        fields = ['username', 'email', 'password', 'password2']
+
+    def validate_email(self, value):
+        validate_email(value)
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Email уже используется")
+        return value
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError("Пароли не совпадают")
+        return data
+
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data['username'],
-            email=validated_data.get('email', ''),
-            password=validated_data['password'],
-            favorite_artists=validated_data.get('favorite_artists', []),
-            disliked_artists=validated_data.get('disliked_artists', []),
-            liked_tracks=validated_data.get('liked_tracks', []),
-            disliked_tracks=validated_data.get('disliked_tracks', [])
+            email=validated_data['email'],
+            password=validated_data['password']
         )
         return user
