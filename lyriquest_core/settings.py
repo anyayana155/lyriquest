@@ -1,3 +1,17 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'lyriquest_db',  # Имя вашей базы данных
+        'USER': 'django_user',    # Имя пользователя MySQL
+        'PASSWORD': 'your_password',  # Пароль пользователя MySQL
+        'HOST': 'your_mysql_host',    # IP-адрес или hostname сервера MySQL
+        'PORT': '3306',        # Стандартный порт MySQL (обычно 3306)
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'", #Рекомендуется
+        },
+    }
+}
+
 """
 Django settings for lyriquest_core project.
 
@@ -9,7 +23,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+"""
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -138,3 +152,4 @@ from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
+"""
