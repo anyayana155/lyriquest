@@ -2,7 +2,6 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
-
 class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         return (
@@ -10,23 +9,16 @@ class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
             str(timestamp) +
             str(user.is_active)
         )
-
-# Экземпляр генератора для использования в других модулях
 email_verification_token = EmailVerificationTokenGenerator()
 
 def send_verification_email(user, request):
-    # Генерируем уникальный токен
     token = email_verification_token.make_token(user)
-    
-    # Строим URL для подтверждения
     verification_url = request.build_absolute_uri(
         reverse('verify-email', kwargs={
             'uid': user.id,
             'token': token
         })
     )
-    
-    # Формируем письмо
     subject = 'Подтверждение email для Lyriquest'
     message = f'''
     Здравствуйте, {user.username}!
@@ -42,8 +34,6 @@ def send_verification_email(user, request):
     Спасибо,
     Команда Lyriquest
     '''
-    
-    # Отправляем письмо
     send_mail(
         subject=subject,
         message=message,
@@ -53,9 +43,6 @@ def send_verification_email(user, request):
     )
 
 def send_welcome_email(user):
-    """
-    Отправляет приветственное письмо после подтверждения email.
-    """
     subject = 'Добро пожаловать в Lyriquest!'
     message = f'''
     Поздравляем, {user.username}!
@@ -63,15 +50,21 @@ def send_welcome_email(user):
     Ваш email успешно подтверждён, и теперь вы можете 
     пользоваться всеми возможностями Lyriquest.
 
-    Начните путешествие в удивительный мир музыки музыку!
+    Начните путешествие в удивительный мир музыки!
 
     С уважением,
     Команда Lyriquest
     '''
-    
     send_mail(
         subject=subject,
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
+    )
+def test_email(): #проверка того, что письма правда отправляются 
+    send_mail(
+        subject='Тестовое письмо',
+        message='Проверка отправки email из LyriQuest!',
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=['h8620@yandex.ru'],
     )
