@@ -61,10 +61,10 @@ def send_welcome_email(user):
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
     )
-def test_email(): #проверка того, что письма правда отправляются 
-    send_mail(
-        subject='Тестовое письмо',
-        message='Проверка отправки email из LyriQuest!',
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=['h8620@yandex.ru'],
-    )
+# def test_email(): #проверка того, что письма правда отправляются 
+#     send_mail(
+#         subject='Тестовое письмо',
+#         message='Проверка отправки email из LyriQuest!',
+#         from_email=settings.DEFAULT_FROM_EMAIL,
+#         recipient_list=['h8620@yandex.ru'],
+#     )
