@@ -1,1 +1,6 @@
 .env
+*.mp3
+*.log
+*.pot
+*.pyc
+__pycache__/

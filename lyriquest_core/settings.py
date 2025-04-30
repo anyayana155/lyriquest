@@ -15,12 +15,17 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+SECURE_HSTS_SECONDS = 30 * 24 * 60 * 60  # 1 month
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = False  # Поставьте True при деплое
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ii4ujduuz)w17h=ha#l5^ksbloixkwn!z(es$@*_9%66rf9%lc'
+SECRET_KEY = '1VLuogn-9OApJCKWz8ivA1q6fweA9_OC4LlV68yi9UgDU6ffKssQhEoHVDGeAJq9zfo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -38,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
     'users',
     'music',
     'recommendations',
@@ -51,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'lyriquest_core.urls'
@@ -58,7 +66,7 @@ ROOT_URLCONF = 'lyriquest_core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,7 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lyriquest_core.wsgi.application'
 
-
+STATIC_URL = 'static/'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -118,7 +126,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -128,15 +135,17 @@ AUTH_USER_MODEL = 'users.User'  # Указываем кастомную моде
 
 # Настройки DRF
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',  # Для удобства разработки
+    ]
 }
 
 # Настройки JWT
 from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
 }
 
 load_dotenv()  
@@ -149,3 +158,8 @@ EMAIL_HOST_USER = 'anyayanya7@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD').strip('"\'')
 DEFAULT_FROM_EMAIL = 'anyayanya7@gmail.com' 
 DEBUG = os.getenv('DEBUG') == 'True'  
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+SHELL_PLUS = "ipython"
+SHELL_PLUS_PRINT_SQL = True
+CORS_ALLOW_ALL_ORIGINS = True 

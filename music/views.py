@@ -14,7 +14,9 @@ class MusicTrackListCreate(generics.ListCreateAPIView):
 class MusicTrackRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Track.objects.all()
     serializer_class = MusicTrackSerializer
-
+class MusicListView(generics.ListAPIView):
+    queryset = Track.objects.all()
+    serializer_class = MusicTrackSerializer
 #Пример добавления эмоций к треку
 class MusicTrackAddEmotion(generics.UpdateAPIView):
     queryset = Track.objects.all()

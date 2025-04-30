@@ -1,5 +1,4 @@
 #CREATE DATABASE lyriquest_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-/*
 USE lyriquest_db;
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -42,7 +41,7 @@ CREATE TABLE playlist_track (
     FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id),
     FOREIGN KEY (track_id) REFERENCES music_track(track_id)
 );
-*/
+
 INSERT INTO users (username, email, password)
 VALUES ('testuser', 'test@example.com', '123456');
 INSERT INTO music_track (title, artist, audio_file, lyrics)
