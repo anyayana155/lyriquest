@@ -6,33 +6,178 @@
 {% block extra_css %}
 <style>
     body {
-        background-color: #d8bfd8;
-    }
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .navbar {
+        background-color: #6a1b9a;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand,
+      .nav-link {
+        color: white !important;
+      }
+
+      .navbar-brand {
+        font-weight: bold;
+        font-size: 1.3rem;
+      }
+
+      .nav-link.active {
+        font-weight: 500;
+      }
+
+      .reg {
+        background-color: white;
+        color: #6a1b9a !important;
+        border-radius: 20px;
+        padding: 5px 15px !important;
+        font-weight: 500;
+      }
+
+      h1 {
+        color: #4a148c;
+        margin: 20px 0;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+        overflow: hidden;
+      }
+
+      .card-title {
+        color: #4a148c;
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+
+      .card-text {
+        color: #555;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      .card-text u {
+        text-decoration: none;
+        border-bottom: 2px solid #9c27b0;
+        padding-bottom: 2px;
+      }
+
+      hr {
+        margin: 30px auto;
+        width: 80%;
+        border-top: 2px solid #e1bee7;
+      }
+
+      h4 {
+        color: #4a148c;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .rounded-start {
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .text-body-secondary {
+        color: #888 !important;
+        font-style: italic;
+      }
 </style>
 {% endblock %}
 
 {% block content %}
-<h1>Личный кабинет</h1>
-<div class="card mb-3" style="max-width: 540px">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <img src="{% static 'cat.jpg' %}" alt="Аватарка">
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Личный кабинет</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+  </head>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="home.html">LyriQuest</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'music' %}">Музыка</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'profile' %}">Личный кабинет</a>
+              </li>
+            </ul>
+            <li class="nav-item">
+              <u><a class="nav-link reg" href="{% url 'auth' %}">Регистрация/аутентификация</a></u>
+            </li>
+          </div>
         </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">Профиль</h5>
-                <br />
-                <u><p class="card-text">Имя</p></u>
-                <u><p class="card-text">День рождения</p></u>
-                <u><p class="card-text">Любимый жанр</p></u>
-                <br />
-                <p class="card-text">
-                    <small class="text-body-secondary">Был в сети 5 минут назад</small>
-                </p>
+      </nav>
+        </div>
+
+        <div class="container py-3">
+            <h1>Личный кабинет</h1>
+      
+            <div class="card mb-4" style="max-width: 540px">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="{% static 'cat.jpg' %}" class="img-fluid rounded-start" alt="Аватарка" />
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">Профиль</h5>
+                    <br />
+                    <u><p class="card-text">Имя</p></u>
+                    <u><p class="card-text">День рождения</p></u>
+                    <u><p class="card-text">Любимый жанр</p></u>
+                    <br />
+                    <p class="card-text">
+                      <small class="text-body-secondary"
+                        >Был в сети 5 минут назад</small
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+      
+
+      <h4>История прослушивания</h4>
     </div>
-</div>
-<hr />
-<h4>История прослушивания</h4>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    ></script>
 {% endblock %}

@@ -49,18 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 {% endblock %}
 
 {% block content %}
-<div class="music-container">
-    <h1>Music Player</h1>
-    
-    <form id="search-form" class="search-form">
-        <input type="text" id="search-query" placeholder="Search for songs..." required>
-        <button type="submit">Search</button>
-    </form>
-    
-    <audio id="audio-player" controls class="player"></audio>
-    
-    <div id="search-results" class="track-list"></div>
-</div>
+
 
 <style>
 .search-form {
@@ -105,7 +94,166 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 4px;
     cursor: pointer;
 }
+<style>
+    body {
+      background-color: #f8f9fa;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .navbar {
+      background-color: #6a1b9a;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: white !important;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .nav-link.active {
+      font-weight: 500;
+    }
+
+    .reg {
+      background-color: white;
+      color: #6a1b9a !important;
+      border-radius: 20px;
+      padding: 5px 15px !important;
+      font-weight: 500;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #7b1fa2, #4a148c);
+      color: white;
+      padding: 80px 0;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+
+    .features {
+      padding: 60px 0;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      height: 100%;
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: #6a1b9a;
+      margin-bottom: 20px;
+    }
+
+    .recommendations {
+      background-color: #f0e5f5;
+      padding: 40px 0;
+      overflow-x: auto;
+    }
+
+    .recommendations-container {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .recommendation-card {
+      min-width: 200px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+
+    .recommendation-card:hover {
+      transform: scale(1.03);
+    }
+
+    .recommendation-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .recommendation-body {
+      padding: 15px;
+    }
+ 
 </style>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">LyriQuest</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'music' %}">Музыка</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'profile' %}">Личный кабинет</a>
+          </li>
+        </ul>
+        <li class="nav-item">
+          <u><a class="nav-link reg" href="{% url 'auth' %}">Регистрация/аутентификация</a></u>
+        </li>
+      </div>
+    </div>
+  </nav>
+    </div>
+  </nav>
+  <div class="music-container">
+    <h1>Music Player</h1>
+    
+    <form id="search-form" class="search-form">
+        <input type="text" id="search-query" placeholder="Search for songs..." required>
+        <button type="submit">Search</button>
+    </form>
+    
+    <audio id="audio-player" controls class="player"></audio>
+    
+    <div id="search-results" class="track-list"></div>
+</div>
 {% endblock %}
 
 
