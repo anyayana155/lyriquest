@@ -1,7 +1,111 @@
+
 {% extends "base.html" %}
 
-{% block title %}Музыка{% endblock %}
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('search-form');
+    const searchResults = document.getElementById('search-results');
+    const audioPlayer = document.getElementById('audio-player');
+    
+    searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const query = document.getElementById('search-query').value;
+        
+        fetch(`/api/music/youtube/search/?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(tracks => {
+                searchResults.innerHTML = '';
+                tracks.forEach(track => {
+                    const trackElement = document.createElement('div');
+                    trackElement.className = 'track';
+                    trackElement.innerHTML = `
+                        <img src="${track.thumbnail_url}" width="120">
+                        <div class="track-info">
+                            <h4>${track.title}</h4>
+                            <p>${track.artist}</p>
+                            <button onclick="playTrack('${track.youtube_id}')">Play</button>
+                        </div>
+                    `;
+                    searchResults.appendChild(trackElement);
+                });
+            });
+    });
+    
+    window.playTrack = function(youtubeId) {
+        fetch(`/api/music/youtube/audio/?id=${youtubeId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.audio_url) {
+                    audioPlayer.src = data.audio_url;
+                    audioPlayer.play();
+                } else {
+                    alert('Could not play track');
+                }
+            });
+    };
+});
+</script>
+{% endblock %}
 
 {% block content %}
-<h1>Здесь будет музыка</h1>
+<div class="music-container">
+    <h1>Music Player</h1>
+    
+    <form id="search-form" class="search-form">
+        <input type="text" id="search-query" placeholder="Search for songs..." required>
+        <button type="submit">Search</button>
+    </form>
+    
+    <audio id="audio-player" controls class="player"></audio>
+    
+    <div id="search-results" class="track-list"></div>
+</div>
+
+<style>
+.search-form {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.player {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.track {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    margin: 10px 0;
+    background: #f5f5f5;
+    border-radius: 8px;
+    align-items: center;
+}
+
+.track-info {
+    flex-grow: 1;
+}
+
+.track h4 {
+    margin: 0 0 5px 0;
+}
+
+.track p {
+    margin: 0;
+    color: #666;
+}
+
+.track button {
+    padding: 8px 15px;
+    background: #1db954;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+</style>
 {% endblock %}
+
+

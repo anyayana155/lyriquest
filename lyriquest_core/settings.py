@@ -59,6 +59,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'lyriquest_core.urls'
@@ -170,3 +172,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 SHELL_PLUS = "ipython"
 SHELL_PLUS_PRINT_SQL = True
 CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = False
+YOUTUBE_API_KEY = 'AIzaSyBGZXH6B2lzmTP3Wjh5WDUSY0n7VRFubx0'
+# Jamendo API Settings
+JAMENDO_CLIENT_ID = "de5b96d6"  # Замените на реальный ключ с devportal.jamendo.com
+JAMENDO_API_URL = "https://api.jamendo.com/v3.0"

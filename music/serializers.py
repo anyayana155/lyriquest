@@ -6,9 +6,13 @@ class EmotionSerializer(serializers.ModelSerializer):
         model = Emotion
         fields = ['id', 'name']
 
-class MusicTrackSerializer(serializers.ModelSerializer):
-    emotions = EmotionSerializer(many=True, read_only=True) # Вложенный сериализатор для эмоций
-
+class TrackSerializer(serializers.ModelSerializer):
+    emotions = EmotionSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Track
-        fields = ['id', 'title', 'artist', 'audio_file', 'artwork', 'emotions']
+        fields = [
+            'id', 'youtube_id', 'title', 'artist', 
+            'duration', 'thumbnail_url', 'play_count',
+            'emotions'
+        ]
